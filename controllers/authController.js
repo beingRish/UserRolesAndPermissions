@@ -1,4 +1,3 @@
-
 const User = require('../models/userModel');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
@@ -44,8 +43,8 @@ const registerUser = async (req, res) => {
     }
 }
 
-const generateAccessToken = async(user) => {
-    const token = jwt.sign(user, process.env.ACCESS_SECRET_TOKEN, { expiresIn:"2h" });
+const generateAccessToken = async (user) => {
+    const token = jwt.sign(user, process.env.ACCESS_SECRET_TOKEN, { expiresIn: "2h" });
     return token;
 }
 
@@ -59,18 +58,16 @@ const loginUser = async (req, res) => {
                 errors: errors.array()
             });
         }
-
         const { email, password } = req.body;
         const userData = await User.findOne({ email });
-
-        if(!userData){
+        if (!userData) {
             return res.status(401).json({
                 success: false,
                 msg: 'Email & Password is incorrect!'
             });
         }
         const isPasswordMatch = await bcrypt.compare(password, userData.password);
-        if(!isPasswordMatch){
+        if (!isPasswordMatch) {
             return res.status(401).json({
                 success: false,
                 msg: 'Email & password is incorrect!'
@@ -93,7 +90,26 @@ const loginUser = async (req, res) => {
     }
 }
 
+const getProfile = async (req, res) => {
+    try {
+        const user_id = req.user._id;
+        const userData = await User.findOne({ _id: user_id });
+
+        return res.status(200).json({
+            success: true,
+            msg: 'Profile Data',
+            data: userData
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
 module.exports = {
     registerUser,
-    loginUser
+    loginUser,
+    getProfile
 }
