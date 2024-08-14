@@ -44,7 +44,7 @@ const addPermission = async (req, res) => {
 
 const getPermissions = async (req, res) => {
     try {
-        const permissions = Permission.find({}).lean();
+        const permissions = await Permission.find({}).lean();
 
         return res.status(200).json({
             success: true,
