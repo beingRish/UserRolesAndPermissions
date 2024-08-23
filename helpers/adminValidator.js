@@ -26,3 +26,7 @@ exports.categoryUpdateValidator = [
     check('category_name','category_name is required').not().isEmpty(),
 ]
 
+exports.postCreateValidator = [
+    check('title','title is required').not().isEmpty(),
+    check('description','description is required').not().isEmpty(),
+]

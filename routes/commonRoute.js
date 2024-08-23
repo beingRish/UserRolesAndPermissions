@@ -6,11 +6,12 @@ const auth = require('../middlewares/authMiddleware')
 const { 
     categoryAddValidator,
     categoryDeleteValidator,
-    categoryUpdateValidator
+    categoryUpdateValidator,postCreateValidator
 } = require('../helpers/adminValidator')
 
 const categoryController = require('../controllers/categoryController');
 
+const postController = require('../controllers/postController');
 
 // category routes
 router.post(
@@ -41,7 +42,19 @@ router.post(
 );
 
 
+// post routes
+router.post(
+    '/create-post', 
+    auth, 
+    postCreateValidator,
+    postController.createPost
+)
 
+router.get(
+    '/get-posts', 
+    auth,
+    postController.getPosts
+)
 
 
 module.exports = router;
