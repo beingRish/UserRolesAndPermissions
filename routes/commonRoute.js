@@ -1,7 +1,12 @@
 const express = require('express');
 const router = express();
-
 const auth = require('../middlewares/authMiddleware')
+
+const categoryController = require('../controllers/categoryController');
+
+const postController = require('../controllers/postController');
+
+const userController = require('../controllers/userController')
 
 const { 
     categoryAddValidator,
@@ -12,9 +17,9 @@ const {
     postUpdateValidator
 } = require('../helpers/adminValidator')
 
-const categoryController = require('../controllers/categoryController');
-
-const postController = require('../controllers/postController');
+const {
+    createUserValidator
+} = require('../helpers/validator')
 
 // category routes
 router.post(
@@ -71,6 +76,14 @@ router.post(
     auth,
     postUpdateValidator,
     postController.updatePost
+)
+
+// user routes
+router.post(
+    '/create-user', 
+    auth,
+    createUserValidator,
+    userController.createUser
 )
 
 module.exports = router;
