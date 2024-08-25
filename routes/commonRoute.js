@@ -18,7 +18,8 @@ const {
 } = require('../helpers/adminValidator')
 
 const {
-    createUserValidator
+    createUserValidator,
+    updateUserValidator
 } = require('../helpers/validator')
 
 // category routes
@@ -84,6 +85,19 @@ router.post(
     auth,
     createUserValidator,
     userController.createUser
+)
+
+router.get(
+    '/get-users',
+    auth,
+    userController.getUsers
+)
+
+router.post(
+    '/update-user', 
+    auth,
+    updateUserValidator,
+    userController.updateUser
 )
 
 module.exports = router;

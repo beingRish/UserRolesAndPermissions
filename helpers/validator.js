@@ -22,4 +22,12 @@ exports.createUserValidator = [
     }),
 ]
 
+exports.updateUserValidator = [
+    check('id', 'id is required').not().isEmpty(),
+    check('name', 'name is required').not().isEmpty()
+]
+
+
+
+
 
