@@ -52,6 +52,7 @@ const getPermissions = async (req, res) => {
     try {
         const permissions = await Permission.find({}).lean();
 
+
         return res.status(200).json({
             success: true,
             msg: 'Permission Fetched Successfully!',
