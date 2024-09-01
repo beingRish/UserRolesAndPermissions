@@ -11,7 +11,11 @@ const routerPermissionSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-
+    permission_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Permission'
+    },
     permission: { //0,1,2,3
         type: Array,
         required: true

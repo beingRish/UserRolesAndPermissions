@@ -15,7 +15,8 @@ const {
     permissionDeleteValidator,
     permissionUpdateValidator,
     storeRoleValidator,
-    addRouterPermissionValidator
+    addRouterPermissionValidator,
+    getRouterPermissionValidator
 } = require('../helpers/adminValidator')
 
 
@@ -77,6 +78,14 @@ router.post(
     addRouterPermissionValidator,
     onlyAdminAccess,
     routerController.addRouterPermission
+);
+
+router.post(
+    '/get-router-permissions',
+    auth,
+    getRouterPermissionValidator,
+    onlyAdminAccess,
+    routerController.getRouterPermissions
 );
 
 

@@ -9,9 +9,6 @@ const getAllRoutes = async (req, res) => {
 
         stack.forEach(data => {
 
-            console.log(data);
-
-
             if (data.name === 'router' && data.handle.stack) {
                 data.handle.stack.forEach(handler => {
                     routes.push({
@@ -49,11 +46,11 @@ const addRouterPermission = async (req, res) => {
             });
         }
 
-        const { router_endpoint, role, permission } = req.body;
+        const { router_endpoint, role, permission_id, permission } = req.body;
 
         const routerPermission = await RouterPermission.findOneAndUpdate(
             { router_endpoint, role },
-            { router_endpoint, role, permission },
+            { router_endpoint, role, permission_id, permission },
             { upsert: true, new: true, setDefaultsOnInsert: true }
         );
 
@@ -71,7 +68,41 @@ const addRouterPermission = async (req, res) => {
     }
 }
 
+const getRouterPermissions = async (req, res) => {
+    try {
+
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+            return res.status(400).json({
+                success: false,
+                msg: 'Validation Errors',
+                errors: errors.array()
+            });
+        }
+
+        const { router_endpoint } = req.body;
+
+        const routerPermission = await RouterPermission.find({
+            router_endpoint
+        }).populate('permission_id');
+
+        return res.status(200).json({
+            success: true,
+            msg: 'Router Permissions',
+            data: routerPermission
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            msg: error.message
+        });
+    }
+}
+
 module.exports = {
     getAllRoutes,
-    addRouterPermission
+    addRouterPermission,
+    getRouterPermissions
 }
