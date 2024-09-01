@@ -24,4 +24,10 @@ router.get(
     authController.getProfile
 );
 
+router.get(
+    '/refresh-permissions',
+    auth,
+    authController.getUserPermissions
+)
+
 module.exports = router;

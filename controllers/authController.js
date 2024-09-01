@@ -3,7 +3,8 @@ const { validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const Permission = require('../models/permissionModel');
-const UserPermission = require('../models/userPermissionModel')
+const UserPermission = require('../models/userPermissionModel');
+const helper = require('../helpers/helper');
 
 const registerUser = async (req, res) => {
     try {
@@ -175,8 +176,28 @@ const getProfile = async (req, res) => {
     }
 }
 
+const getUserPermissions = async (req, res) => {
+    try {
+        const user_id = req.user._id;
+
+        const userPermissions = await helper.getUserPermissions(user_id);
+
+        return res.status(200).json({
+            success: true,
+            msg: 'User Permissions',
+            data: userPermissions
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            msg: error.message
+        })
+    }
+}
+
 module.exports = {
     registerUser,
     loginUser,
-    getProfile
+    getProfile,
+    getUserPermissions
 }
