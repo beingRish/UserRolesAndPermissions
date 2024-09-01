@@ -22,7 +22,7 @@ const storeRole = async (req, res) => {
 
         const roleData = await role.save();
 
-        return res.status(400).json({
+        return res.status(200).json({
             success: true,
             msg: 'Role Created Successfully!',
             data: roleData

@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express();
+const router = express.Router();
 const auth = require('../middlewares/authMiddleware')
 
 const categoryController = require('../controllers/categoryController');
@@ -7,7 +7,7 @@ const postController = require('../controllers/postController');
 const userController = require('../controllers/userController')
 const likeController = require('../controllers/likeController')
 
-const { 
+const {
     categoryAddValidator,
     categoryDeleteValidator,
     categoryUpdateValidator,
@@ -26,27 +26,27 @@ const {
 
 // category routes
 router.post(
-    '/add-category', 
-    auth, 
+    '/add-category',
+    auth,
     categoryAddValidator,
     categoryController.addCategory
 );
 
 router.get(
-    '/get-categories', 
-    auth, 
+    '/get-categories',
+    auth,
     categoryController.getCategories
 );
 
 router.post(
-    '/delete-category', 
+    '/delete-category',
     auth,
     categoryDeleteValidator,
     categoryController.deleteCategory
 );
 
 router.post(
-    '/update-category', 
+    '/update-category',
     auth,
     categoryUpdateValidator,
     categoryController.updateCategory
@@ -55,14 +55,14 @@ router.post(
 
 // post routes
 router.post(
-    '/create-post', 
-    auth, 
+    '/create-post',
+    auth,
     postCreateValidator,
     postController.createPost
 )
 
 router.get(
-    '/get-posts', 
+    '/get-posts',
     auth,
     postController.getPosts
 )
@@ -83,7 +83,7 @@ router.post(
 
 // user routes
 router.post(
-    '/create-user', 
+    '/create-user',
     auth,
     createUserValidator,
     userController.createUser
@@ -96,14 +96,14 @@ router.get(
 )
 
 router.post(
-    '/update-user', 
+    '/update-user',
     auth,
     updateUserValidator,
     userController.updateUser
 )
 
 router.post(
-    '/delete-user', 
+    '/delete-user',
     auth,
     deleteUserValidator,
     userController.deleteUser
@@ -112,21 +112,21 @@ router.post(
 // like & unlike routes
 
 router.post(
-    '/post-like', 
+    '/post-like',
     auth,
     postLikeUnlikeValidator,
     likeController.postLike
 )
 
 router.post(
-    '/post-unlike', 
+    '/post-unlike',
     auth,
     postLikeUnlikeValidator,
     likeController.postUnlike
 )
 
 router.post(
-    '/post-like-count', 
+    '/post-like-count',
     auth,
     postLikeCountValidator,
     likeController.postLikeCount

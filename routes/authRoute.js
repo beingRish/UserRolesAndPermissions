@@ -6,21 +6,21 @@ const authController = require('../controllers/authController');
 const { registerValidator, loginValidator } = require('../helpers/validator')
 
 router.post(
-    '/register', 
-    registerValidator, 
+    '/register',
+    registerValidator,
     authController.registerUser
 );
 
 router.post(
-    '/login', 
-    loginValidator, 
+    '/login',
+    loginValidator,
     authController.loginUser
 );
 
 // authenticated routes
 router.get(
-    '/profile', 
-    auth, 
+    '/profile',
+    auth,
     authController.getProfile
 );
 
