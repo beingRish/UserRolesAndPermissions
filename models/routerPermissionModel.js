@@ -13,7 +13,7 @@ const routerPermissionSchema = new mongoose.Schema({
     },
 
     permission: { //0,1,2,3
-        type: Number,
+        type: Array,
         required: true
     }
 })
