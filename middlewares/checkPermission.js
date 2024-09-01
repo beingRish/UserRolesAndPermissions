@@ -1,23 +1,28 @@
+const helper = require('../helpers/helper');
 
-
-const checkPermission = async(req, res, next) => {
+const checkPermission = async (req, res, next) => {
 
     try {
 
         // console.log(req.user);
 
-        if(req.user.role != 1){ // if user not admin
+        if (req.user.role != 1) { // if user not admin
 
-            return res.status(400).json({
-                success: false,
-                msg: 'We will work on next lecture!'
-            });
+            const routerPermission = await helper.getRouterPermission(req.path, req.user.role);
+
+            if (!routerPermission) {
+
+                return res.status(400).json({
+                    success: false,
+                    msg: "you have not permission to access this route!"
+                })
+            }
 
         }
 
         return next();
 
-    } catch(error) {
+    } catch (error) {
         return res.status(400).json({
             success: false,
             msg: 'Something went wrong!'
