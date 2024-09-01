@@ -54,7 +54,6 @@ const createUser = async (req, res) => {
         const user = User(obj);
         const userData = await user.save();
 
-
         // add permission to user if coming in request
         if(req.body.permissions != undefined && req.body.permissions.length > 0) {
 
@@ -68,7 +67,7 @@ const createUser = async (req, res) => {
 
                 permissionArray.push({
                     permission_name: permissionData.permission_name,
-                    permission_value: permission.permission_value
+                    permission_value: permission.value
                 });
             } ));
 
@@ -228,6 +227,32 @@ const updateUser = async (req, res) => {
         const updatedData = await User.findByIdAndUpdate({ _id: id }, {
             $set: updateObj
         }, { new: true });
+
+        
+
+        // update permission to user if coming in request
+        if(req.body.permissions != undefined && req.body.permissions.length > 0) {
+
+            const updatePermission = req.body.permissions
+
+            const permissionArray = [];
+
+            await Promise.all(updatePermission.map( async(permission) => {
+
+                const permissionData = await Permission.findOne({ _id: permission.id });
+
+                permissionArray.push({
+                    permission_name: permissionData.permission_name,
+                    permission_value: permission.value
+                });
+            } ));
+
+            await UserPermission.findOneAndUpdate(
+                { user_id: updatedData._id },
+                { permissions: permissionArray },
+                { upsert: true, new: true, setDefaultsOnInsert: true }
+            );
+        }
 
         return res.status(200).json({
             success: true,
