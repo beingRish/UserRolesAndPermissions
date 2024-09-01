@@ -7,6 +7,8 @@ const postController = require('../controllers/postController');
 const userController = require('../controllers/userController')
 const likeController = require('../controllers/likeController')
 
+const checkPermission = require('../middlewares/checkPermission')
+
 const {
     categoryAddValidator,
     categoryDeleteValidator,
@@ -27,6 +29,7 @@ const {
 // category routes
 router.post(
     '/add-category',
+    checkPermission,
     auth,
     categoryAddValidator,
     categoryController.addCategory
@@ -35,12 +38,14 @@ router.post(
 router.get(
     '/get-categories',
     auth,
+    checkPermission,
     categoryController.getCategories
 );
 
 router.post(
     '/delete-category',
     auth,
+    checkPermission,
     categoryDeleteValidator,
     categoryController.deleteCategory
 );
@@ -48,6 +53,7 @@ router.post(
 router.post(
     '/update-category',
     auth,
+    checkPermission,
     categoryUpdateValidator,
     categoryController.updateCategory
 );
@@ -57,6 +63,7 @@ router.post(
 router.post(
     '/create-post',
     auth,
+    checkPermission,
     postCreateValidator,
     postController.createPost
 )
@@ -64,12 +71,14 @@ router.post(
 router.get(
     '/get-posts',
     auth,
+    checkPermission,
     postController.getPosts
 )
 
 router.post(
     '/delete-post',
     auth,
+    checkPermission,
     postDeleteValidator,
     postController.deletePost
 )
@@ -77,6 +86,7 @@ router.post(
 router.post(
     '/update-post',
     auth,
+    checkPermission,
     postUpdateValidator,
     postController.updatePost
 )
@@ -85,6 +95,7 @@ router.post(
 router.post(
     '/create-user',
     auth,
+    checkPermission,
     createUserValidator,
     userController.createUser
 )
@@ -92,12 +103,14 @@ router.post(
 router.get(
     '/get-users',
     auth,
+    checkPermission,
     userController.getUsers
 )
 
 router.post(
     '/update-user',
     auth,
+    checkPermission,
     updateUserValidator,
     userController.updateUser
 )
@@ -105,6 +118,7 @@ router.post(
 router.post(
     '/delete-user',
     auth,
+    checkPermission,
     deleteUserValidator,
     userController.deleteUser
 )
@@ -114,6 +128,7 @@ router.post(
 router.post(
     '/post-like',
     auth,
+    checkPermission,
     postLikeUnlikeValidator,
     likeController.postLike
 )
@@ -121,6 +136,7 @@ router.post(
 router.post(
     '/post-unlike',
     auth,
+    checkPermission,
     postLikeUnlikeValidator,
     likeController.postUnlike
 )
@@ -128,6 +144,7 @@ router.post(
 router.post(
     '/post-like-count',
     auth,
+    checkPermission,
     postLikeCountValidator,
     likeController.postLikeCount
 )
